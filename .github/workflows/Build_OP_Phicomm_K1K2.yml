@@ -90,7 +90,7 @@ jobs:
       run: |
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
-    - name : Upload artifact
+    - name : Upload openwrtbin
       uses: actions/upload-artifact@master
       with:
         name: OpenWrt
@@ -98,26 +98,26 @@ jobs:
     - name: Assemble artifact k2
       run: |
         cd openwrt
-        rm -rf ./artifact/
-        mkdir -p ./artifact/
-        find ./bin/targets/ -name "*combined*img*" | xargs -i mv -f {} ./artifact/
-        find ./bin/targets/ -name "*psg1218a*sysupgrade*bin*" | xargs -i mv -f {} ./artifact/
+        rm -rf ./artifactk2/
+        mkdir -p ./artifactk2/
+        find ./bin/targets/ -name "*combined*img*" | xargs -i cp -f {} ./artifactk2/
+        find ./bin/targets/ -name "*psg1218a*sysupgrade*bin*" | xargs -i cp -f {} ./artifactk2/
         
-    - name: Upload artifact
+    - name: Upload artifact k2
       uses: actions/upload-artifact@master
       with:
         name: OpenWrt phicomm k2 5.4
-        path: ./openwrt/artifact/
+        path: ./openwrt/artifactk2/
     - name: Assemble artifact k1
       run: |
         cd openwrt
-        rm -rf ./artifact/
-        mkdir -p ./artifact/
-        find ./bin/targets/ -name "*combined*img*" | xargs -i mv -f {} ./artifact/
-        find ./bin/targets/ -name "*psg1208*sysupgrade*bin*" | xargs -i mv -f {} ./artifact/
+        rm -rf ./artifactk1/
+        mkdir -p ./artifactk1/
+        find ./bin/targets/ -name "*combined*img*" | xargs -i cp -f {} ./artifactk1/
+        find ./bin/targets/ -name "*psg1208*sysupgrade*bin*" | xargs -i cp -f {} ./artifactk1/
         
-    - name: Upload artifact
+    - name: Upload artifact k1
       uses: actions/upload-artifact@master
       with:
         name: OpenWrt phicomm k1 5.4
-        path: ./openwrt/artifact/
+        path: ./openwrt/artifactk1/
