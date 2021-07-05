@@ -16,7 +16,7 @@ on:
       - master
 
   schedule:
-    - cron: 0 8 * * 5
+    - cron: 0 23 * * 4
   
   watch:
     types: [started]
@@ -93,14 +93,13 @@ jobs:
     - name : Upload openwrtbin
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt
+        name: OpenWrtAll
         path: openwrt/bin
     - name: Assemble artifact k2
       run: |
         cd openwrt
         rm -rf ./artifactk2/
         mkdir -p ./artifactk2/
-        find ./bin/targets/ -name "*combined*img*" | xargs -i cp -f {} ./artifactk2/
         find ./bin/targets/ -name "*psg1218a*sysupgrade*bin*" | xargs -i cp -f {} ./artifactk2/
         
     - name: Upload artifact k2
@@ -113,7 +112,6 @@ jobs:
         cd openwrt
         rm -rf ./artifactk1/
         mkdir -p ./artifactk1/
-        find ./bin/targets/ -name "*combined*img*" | xargs -i cp -f {} ./artifactk1/
         find ./bin/targets/ -name "*psg1208*sysupgrade*bin*" | xargs -i cp -f {} ./artifactk1/
         
     - name: Upload artifact k1
