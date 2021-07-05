@@ -119,3 +119,8 @@ jobs:
       with:
         name: OpenWrt phicomm k1 5.4
         path: ./openwrt/artifactk1/
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
+        retain_days: 45
+        keep_minimum_runs: 8
