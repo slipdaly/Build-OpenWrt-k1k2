@@ -88,7 +88,7 @@ jobs:
       run: |
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
-        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+        echo "FILE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
     - name : Upload OpenWrt firmware directory
       uses: actions/upload-artifact@master
       with:
@@ -104,7 +104,7 @@ jobs:
     - name: Upload artifact k2
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt phicomm k2 5.4 ${{ env.FILE_DATE }}
+        name: phicomm_k2_5.4_${{ env.FILE_DATE }}
         path: ./openwrt/artifactk2/
     - name: Assemble artifact k1
       run: |
@@ -116,7 +116,7 @@ jobs:
     - name: Upload artifact k1
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt phicomm k1 5.4 ${{ env.FILE_DATE }}
+        name: phicomm_k1_5.4_${{ env.FILE_DATE }}
         path: ./openwrt/artifactk1/
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
