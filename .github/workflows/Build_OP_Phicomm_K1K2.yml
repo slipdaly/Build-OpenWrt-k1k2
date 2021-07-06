@@ -94,13 +94,13 @@ jobs:
       with:
         name: OpenWrt_firmware_${{ env.FILE_DATE }}
         path: openwrt/bin
-    - name: Assemble artifact k2
+    - name: Assemble artifact
       run: |
         cd openwrt
         rm -rf ./artifactphicomm/
         mkdir -p ./artifactphicomm/
-        find ./bin/targets/ -name "*psg1208*sysupgrade*bin*" | xargs -i zip ./artifactphicomm/phicomm_k1_5.4_${{ env.FILE_DATE }}.zip {}
-        find ./bin/targets/ -name "*psg1218a*sysupgrade*bin*" | xargs -i zip ./artifactphicomm/phicomm_k2_5.4_${{ env.FILE_DATE }}.zip {}
+        find ./bin/targets/ -name "*psg1208*sysupgrade*bin*" | xargs -i zip -j ./artifactphicomm/phicomm_k1_5.4_${{ env.FILE_DATE }}.zip {}
+        find ./bin/targets/ -name "*psg1218a*sysupgrade*bin*" | xargs -i zip -j ./artifactphicomm/phicomm_k2_5.4_${{ env.FILE_DATE }}.zip {}
         
     - name: Generate release tag
       id: tag
