@@ -97,29 +97,36 @@ jobs:
     - name: Assemble artifact k2
       run: |
         cd openwrt
-        rm -rf ./artifactk2/
-        mkdir -p ./artifactk2/
-        find ./bin/targets/ -name "*psg1218a*sysupgrade*bin*" | xargs -i cp -f {} ./artifactk2/
+        rm -rf ./artifactphicomm/
+        mkdir -p ./artifactphicomm/
+        find ./bin/targets/ -name "*psg1208*sysupgrade*bin*" | xargs -i zip ./artifactphicomm/phicomm_k1_5.4_${{ env.FILE_DATE }}.zip {}
+        find ./bin/targets/ -name "*psg1218a*sysupgrade*bin*" | xargs -i zip ./artifactphicomm/phicomm_k2_5.4_${{ env.FILE_DATE }}.zip {}
         
-    - name: Upload artifact k2
-      uses: actions/upload-artifact@master
-      with:
-        name: phicomm_k2_5.4_${{ env.FILE_DATE }}
-        path: ./openwrt/artifactk2/
-    - name: Assemble artifact k1
+    - name: Generate release tag
+      id: tag
       run: |
-        cd openwrt
-        rm -rf ./artifactk1/
-        mkdir -p ./artifactk1/
-        find ./bin/targets/ -name "*psg1208*sysupgrade*bin*" | xargs -i cp -f {} ./artifactk1/
+        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
+        echo "::set-output name=status::success"
         
-    - name: Upload artifact k1
-      uses: actions/upload-artifact@master
+    - name: Upload firmware to release
+      uses: softprops/action-gh-release@v1
+      if: steps.tag.outputs.status == 'success' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: phicomm_k1_5.4_${{ env.FILE_DATE }}
-        path: ./openwrt/artifactk1/
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        files: openwrt/artifactphicomm/*
+        
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
       with:
         retain_days: 45
         keep_minimum_runs: 8
+        
+    - name: Remove old Releases
+      uses: dev-drprasad/delete-older-releases@v0.1.0
+      with:
+        keep_latest: 3
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
