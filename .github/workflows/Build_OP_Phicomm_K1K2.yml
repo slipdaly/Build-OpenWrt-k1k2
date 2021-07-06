@@ -63,8 +63,6 @@ jobs:
       run: |
         rm -rf openwrt
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-        cd openwrt
-        echo "src-git ssrp https://github.com/fw876/helloworld.git" >> ./feeds.conf.default
     - name: Update & Install feeds
       working-directory: ./openwrt
       run: |
@@ -90,10 +88,11 @@ jobs:
       run: |
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
-    - name : Upload openwrtbin
+        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+    - name : Upload OpenWrt firmware directory
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrtAll
+        name: OpenWrt_firmware_${{ env.FILE_DATE }}
         path: openwrt/bin
     - name: Assemble artifact k2
       run: |
@@ -105,7 +104,7 @@ jobs:
     - name: Upload artifact k2
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt phicomm k2 5.4
+        name: OpenWrt phicomm k2 5.4 ${{ env.FILE_DATE }}
         path: ./openwrt/artifactk2/
     - name: Assemble artifact k1
       run: |
@@ -117,7 +116,7 @@ jobs:
     - name: Upload artifact k1
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt phicomm k1 5.4
+        name: OpenWrt phicomm k1 5.4 ${{ env.FILE_DATE }}
         path: ./openwrt/artifactk1/
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
