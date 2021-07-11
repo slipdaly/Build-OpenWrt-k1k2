@@ -58,7 +58,7 @@ jobs:
         sudo -E apt-get clean
     - name: Clone source code
       env: 
-        REPO_URL: https://github.com/coolsnowwolf/lede
+        REPO_URL: https://github.com/slipdaly/lede
         REPO_BRANCH: master
       run: |
         rm -rf openwrt
@@ -120,8 +120,8 @@ jobs:
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
       with:
-        retain_days: 45
-        keep_minimum_runs: 8
+        retain_days: 10
+        keep_minimum_runs: 3
         
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.1.0
