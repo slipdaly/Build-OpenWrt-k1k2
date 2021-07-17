@@ -66,9 +66,12 @@ jobs:
     - name: Update & Install feeds
       working-directory: ./openwrt
       run: |
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
-        ./scripts/feeds install -a
+        ./scripts/feeds update -a && ./scripts/feeds install -a
+    - name: Import external feeds - passwall
+      working-directory: ./openwrt
+      run: |
+        rm -rf package/slipdaly
+        git clone https://github.com/slipdaly/luci-app-adblock-plus.git package/slipdaly
     - name: Configuration Customization - Build_Phicomm_K1K2
       env:
         CONFIG_FILE: 'phicomm_k1k2.config'
