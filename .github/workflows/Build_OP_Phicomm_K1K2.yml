@@ -8,13 +8,6 @@
 name: Build_OP_Phicomm_K1K2
 
 on: 
-  release:
-    types: [published]
-
-  push:
-    branches: 
-      - master
-
   schedule:
     - cron: 0 23 * * 4
   
@@ -24,6 +17,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
     - name: Checkout
@@ -58,7 +52,7 @@ jobs:
         sudo -E apt-get clean
     - name: Clone source code
       env: 
-        REPO_URL: https://github.com/slipdaly/lede
+        REPO_URL: https://github.com/coolsnowwolf/lede
         REPO_BRANCH: master
       run: |
         rm -rf openwrt
