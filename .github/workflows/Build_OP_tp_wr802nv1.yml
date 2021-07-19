@@ -8,11 +8,18 @@
 name: Build_OP_tl-wr802n-v1
 
 on: 
-  schedule:
-    - cron: 0 23 * * 4
+#   schedule:
+#     - cron: 0 23 * * 4
   
-  watch:
-    types: [started]
+#   watch:
+#     types: [started]
+    repository_dispatch:
+    workflow_dispatch:
+      inputs:
+        ssh:
+          description: 'SSH connection to Actions'
+          required: false
+          default: 'false'
 
 jobs:
   build:
