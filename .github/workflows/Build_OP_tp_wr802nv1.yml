@@ -59,8 +59,8 @@ jobs:
         sudo -E apt-get clean
     - name: Clone source code
       env: 
-        REPO_URL: https://github.com/coolsnowwolf/lede
-        REPO_BRANCH: master
+        REPO_URL: https://github.com/slipdaly/openwrt.git
+        REPO_BRANCH: openwrt-18.06
       run: |
         rm -rf openwrt
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
@@ -72,7 +72,7 @@ jobs:
       working-directory: ./openwrt
       run: |
         rm -rf package/slipdaly
-        git clone https://github.com/slipdaly/luci-app-adblock-plus.git package/slipdaly
+        git clone https://github.com/slipdaly/luci-app-adblock-plus.git package/luci-app-adblock-plus
     - name: Configuration Customization - Build_tl-wr802n-v1
       env:
         CONFIG_FILE: 'tl-wr802n-v1.config'
@@ -103,7 +103,7 @@ jobs:
         cd openwrt
         rm -rf ./artifact_tp/
         mkdir -p ./artifact_tp/
-        find ./bin/targets/ -name "*sysupgrade*bin*" | xargs -i zip -j ./artifact_tp/wr802Nv1_5.10_${{ env.FILE_DATE }}.zip {}
+        find ./bin/targets/ -name "*sysupgrade*bin*" | xargs -i zip -j ./artifact_tp/wr802Nv1_18.06_${{ env.FILE_DATE }}.zip {}
         
     - name: Generate release tag
       id: tag
