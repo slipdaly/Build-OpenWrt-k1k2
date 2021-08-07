@@ -73,7 +73,7 @@ jobs:
       run: |
         rm -rf package/slipdaly
         git clone -b test https://github.com/slipdaly/luci-app-adblock-plus.git package/luci-app-adblock-plus
-    - name: Configuration Customization - Build_Phicomm_K1K2
+    - name: Configuration Customization - Build_luci-app-adblock-plus
       env:
         CONFIG_FILE: 'luci-app-adblock-plus.config'
       run: |
@@ -91,7 +91,7 @@ jobs:
       working-directory: ./openwrt
       run: |
         echo -e "$(nproc) thread build."
-        make package/luci-app-adblock-plus/compile V=s
+        make -j$(nproc) V=s
         echo "FILE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
     - name : Upload luci-app-adblock-plus directory
       uses: actions/upload-artifact@master
