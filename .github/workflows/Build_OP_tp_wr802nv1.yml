@@ -71,7 +71,7 @@ jobs:
     - name: Import external feeds - passwall
       working-directory: ./openwrt
       run: |
-        rm -rf package/slipdaly
+        rm -rf package/luci-app-adblock-plus
         git clone https://github.com/slipdaly/luci-app-adblock-plus.git package/luci-app-adblock-plus
     - name: Configuration Customization - Build_tl-wr802n-v1
       env:
