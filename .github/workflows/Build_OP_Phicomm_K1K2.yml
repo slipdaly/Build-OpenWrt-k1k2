@@ -9,7 +9,7 @@ name: Build_OP_Phicomm_K1K2
 
 on: 
   schedule:
-    - cron: 0 4 * * 5
+    - cron: 30 16 * * 4
   
   watch:
     types: [started]
