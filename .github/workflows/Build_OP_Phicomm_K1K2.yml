@@ -11,8 +11,16 @@ on:
   schedule:
     - cron: 30 16 * * 4
   
-  watch:
-    types: [started]
+  workflow_dispatch:
+      # Inputs the workflow accepts.
+      inputs:
+        name:
+          # Friendly description to be shown in the UI instead of 'name'
+          description: 'retry'
+          # Default value if no value is explicitly provided
+          default: 'run'
+          # Input has to be provided for the workflow to run
+          required: true
 
 jobs:
   build:
