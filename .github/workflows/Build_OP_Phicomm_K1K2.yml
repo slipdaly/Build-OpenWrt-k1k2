@@ -62,10 +62,10 @@ jobs:
     - name: Import external feeds - passwall
       working-directory: ./openwrt
       run: |
-        rm -rf package/luci-app-adblock-plus
-        git clone https://github.com/slipdaly/luci-app-adblock-plus.git package/luci-app-adblock-plus
-        rm -rf package/luci-app-msd
-        git clone https://github.com/slipdaly/luci-app-msd_lite.git package/luci-app-msd
+        rm -rf feeds/packages/net/msd_lite
+        git clone --depth=1 https://github.com/ximiTech/msd_lite.git feeds/packages/net/msd_lite
+        rm -rf feeds/luci/applications/luci-app-msd_lite
+        git clone --depth=1 https://github.com/ximiTech/luci-app-msd_lite.git feeds/luci/applications/luci-app-msd_lite
     - name: Configuration Customization - Build_Phicomm_K1K2
       env:
         CONFIG_FILE: 'phicomm_k1k2.config'
