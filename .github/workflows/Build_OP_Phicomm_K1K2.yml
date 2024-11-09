@@ -5,7 +5,7 @@
 # Youtube Channel: https://goo.gl/fvkdwm 
 #=================================================
 
-name: Build_OP_Phicomm_K1K2
+name: Build_OP_Phicomm_K2
 
 on: 
   schedule:
@@ -59,16 +59,9 @@ jobs:
       working-directory: ./openwrt
       run: |
         ./scripts/feeds update -a && ./scripts/feeds install -a
-    - name: Import external feeds - passwall
-      working-directory: ./openwrt
-      run: |
-        rm -rf feeds/packages/net/msd_lite
-        git clone --depth=1 https://github.com/ximiTech/msd_lite.git feeds/packages/net/msd_lite
-        rm -rf package/luci-app-msd
-        git clone https://github.com/slipdaly/luci-app-msd_lite.git package/luci-app-msd
-    - name: Configuration Customization - Build_Phicomm_K1K2
+    - name: Configuration Customization - Build_Phicomm_K2
       env:
-        CONFIG_FILE: 'phicomm_k1k2.config'
+        CONFIG_FILE: 'phicomm_k2.config'
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x ./customize.sh && ./customize.sh
@@ -96,7 +89,7 @@ jobs:
         cd openwrt
         rm -rf ./artifactphicomm/
         mkdir -p ./artifactphicomm/
-        find ./bin/targets/ -name "*psg1208*sysupgrade*bin*" | xargs -i zip -j ./artifactphicomm/phicomm_k1_5.4_${{ env.FILE_DATE }}.zip {}
+        #find ./bin/targets/ -name "*psg1208*sysupgrade*bin*" | xargs -i zip -j ./artifactphicomm/phicomm_k1_5.4_${{ env.FILE_DATE }}.zip {}
         find ./bin/targets/ -name "*psg1218a*sysupgrade*bin*" | xargs -i zip -j ./artifactphicomm/phicomm_k2_5.4_${{ env.FILE_DATE }}.zip {}
         
     - name: Generate release tag
