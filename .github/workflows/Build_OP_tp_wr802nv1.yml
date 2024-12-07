@@ -28,6 +28,10 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
+    - name: set time zone
+      uses: szenius/set-timezone@v1.1
+      with:
+       timezoneLinux: "Asia/Shanghai"
     - name: Checkout
       uses: actions/checkout@master
 
@@ -60,7 +64,7 @@ jobs:
         rm -rf feeds/packages/net/msd_lite
         git clone --depth=1 https://github.com/ximiTech/msd_lite.git feeds/packages/net/msd_lite
         rm -rf package/luci-app-msd
-        git clone https://github.com/slipdaly/luci-app-msd_lite.git package/luci-app-msd
+        git clone --depth=1 https://github.com/ximiTech/luci-app-msd_lite.git package/luci-app-msd
     - name: Configuration Customization - Build_tl-wr802n-v1
       env:
         CONFIG_FILE: 'tl-wr802n-v1.config'
