@@ -58,11 +58,11 @@ jobs:
       working-directory: ./openwrt
       run: |
         ./scripts/feeds update -a && ./scripts/feeds install -a
-    - name: Import external feeds - passwall
-      working-directory: ./openwrt
-      run: |
-        rm -rf package/luci-app-msd
-        git clone --depth=1 https://github.com/ximiTech/luci-app-msd_lite.git package/luci-app-msd
+    #- name: Import external feeds - luci-app-msd
+    #  working-directory: ./openwrt
+    #  run: |
+    #    rm -rf package/luci-app-msd
+    #    git clone --depth=1 https://github.com/ximiTech/luci-app-msd_lite.git package/luci-app-msd
     - name: Configuration Customization - Build_tl-wr802n-v1
       env:
         CONFIG_FILE: 'tl-wr802n-v1.config'
