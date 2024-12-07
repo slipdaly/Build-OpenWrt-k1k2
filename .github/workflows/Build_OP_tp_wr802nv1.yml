@@ -61,8 +61,6 @@ jobs:
     - name: Import external feeds - passwall
       working-directory: ./openwrt
       run: |
-        rm -rf feeds/packages/net/msd_lite
-        git clone --depth=1 https://github.com/ximiTech/msd_lite.git feeds/packages/net/msd_lite
         rm -rf package/luci-app-msd
         git clone --depth=1 https://github.com/ximiTech/luci-app-msd_lite.git package/luci-app-msd
     - name: Configuration Customization - Build_tl-wr802n-v1
