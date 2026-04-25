@@ -7,3 +7,19 @@
 #=================================================
 #1. Modify default IP
 #sed -i 's/192.168.1.1/192.168.5.1/g' openwrt/package/base-files/files/bin/config_generate
+
+set -e
+
+RTP2HTTPD_REPO_URL="https://github.com/slipdaly/rtp2httpd.git"
+RTP2HTTPD_REPO_BRANCH="stable_lite"
+RTP2HTTPD_TMP_DIR="openwrt/package/_rtp2httpd_src"
+RTP2HTTPD_PKG_DIR="openwrt/package/rtp2httpd-minimal"
+LUCI_RTP2HTTPD_PKG_DIR="openwrt/package/luci-app-rtp2httpd-minimal"
+
+rm -rf "${RTP2HTTPD_TMP_DIR}" "${RTP2HTTPD_PKG_DIR}" "${LUCI_RTP2HTTPD_PKG_DIR}"
+git clone --depth 1 "${RTP2HTTPD_REPO_URL}" -b "${RTP2HTTPD_REPO_BRANCH}" "${RTP2HTTPD_TMP_DIR}"
+
+cp -a "${RTP2HTTPD_TMP_DIR}/openwrt-support/rtp2httpd-minimal" "${RTP2HTTPD_PKG_DIR}"
+cp -a "${RTP2HTTPD_TMP_DIR}/openwrt-support/luci-app-rtp2httpd-minimal" "${LUCI_RTP2HTTPD_PKG_DIR}"
+
+rm -rf "${RTP2HTTPD_TMP_DIR}"
