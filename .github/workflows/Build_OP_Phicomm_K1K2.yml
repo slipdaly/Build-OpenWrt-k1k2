@@ -55,6 +55,11 @@ jobs:
       run: |
         rm -rf openwrt
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+    - name: Pin luci feed
+      working-directory: ./openwrt
+      run: |
+        sed -i '/^src-git luci /d' feeds.conf.default
+        echo 'src-git luci https://github.com/coolsnowwolf/luci.git^03b3a44' >> feeds.conf.default
     - name: Update & Install feeds
       working-directory: ./openwrt
       run: |
